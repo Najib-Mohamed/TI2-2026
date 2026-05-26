@@ -22,6 +22,25 @@ require_once URL_BASE . "/model/guestbookModel.php";
  * le mode fetch à tableau associatif
  */
 
+// connection à notre base de donnée 
+try {
+    $connectDB = new PDO(
+        dsn: MARIA_DSN,
+        username: DB_LOGIN,
+        password: DB_PWD,
+        // options, on active les erreurs pour ne pas avoir de pages blanches en cas de désaxtivation (optionnel depuis PHP 8.0)
+        options: [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        ]
+    );
+
+    // option, on peut les ajouter après la connexion (donc en dehors de options:), sauf pour la connexion permanente, ici il s'agit du format de récupération php tableaux associatifs
+    $connectDB->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    // arrêt et affichage de l'erreur (ev dev)
+    die($e->getMessage());
+}
+
 /*
  * Si le formulaire a été soumis
  */
