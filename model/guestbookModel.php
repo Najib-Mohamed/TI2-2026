@@ -38,22 +38,21 @@ function addGuestbook(
     $firstname = htmlspecialchars(trim(strip_tags($firstname)));
     $lastname = htmlspecialchars(trim(strip_tags($lastname)));
     $phone = htmlspecialchars(trim(strip_tags($phone)));
-    $phone = htmlspecialchars(trim(strip_tags($postcode)));
+    $postcode = htmlspecialchars(trim(strip_tags($postcode)));
 
     if (
-        $usermail === false             ||
-        strlen($usermail) <= 120            ||
-        empty($firstname)            ||
+        $usermail === false         ||
+        strlen($usermail) >= 200    ||
+        empty($firstname)           ||
         empty($lastname)            ||
-        strlen($firstname) <= 100        ||
-        strlen($lastname) <= 100        ||
-        empty($phone)                 ||
-        strlen($phone) == 10              ||
-        empty($postcode)                 ||
-        strlen($postcode) == 4              ||
-        empty($message)          ||
-        strlen($message) > 5       ||
-        strlen($message) < 300
+        strlen($firstname) >= 100   ||
+        strlen($lastname) >= 100    ||
+        empty($phone)               ||
+        strlen($phone) != 10        ||
+        empty($postcode)            ||
+        strlen($postcode) != 4      ||
+        empty($message)             ||
+        strlen($message) > 300
     ) return false;    // requête préparée obligatoire !
 
     // si l'insertion a réussi
@@ -63,7 +62,7 @@ function addGuestbook(
 
 
     $prepare = $db->prepare("
-    INSERT INTO `commentaire`(`firstname`,`lastname`,`usermail`,`phone`,`postcode`,`message`)
+    INSERT INTO `guestbook`(`firstname`,`lastname`,`usermail`,`phone`,`postcode`,`message`)
     VALUES(:firstname,:lastname,:usermail,:phone,:postcode,:message); 
     ");
     # on met nos val dans 

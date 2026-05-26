@@ -139,6 +139,7 @@ label {
 
 .commentaires-utilisateur {
   width: 60%;
+  height: fit-content;
   margin: 0 auto;
   background: #3d196b;
   color: #f3f5fb;
@@ -214,4 +215,14 @@ label {
     border-bottom: solid rgba(255, 255, 255, 0.4) 1px;
     width: 95%;
     margin-bottom: 20px;
+}
+
+.list-commentaires{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.message-content{
+    width: 100%;
+    /* overflow: clip; */
 }

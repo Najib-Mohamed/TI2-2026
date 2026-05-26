@@ -43,42 +43,42 @@
                     <label for="firstname">Prénom</label>
                     <input type="text" name="firstname" id="firstname"
                         value="<?= htmlspecialchars($_POST['firstname'] ?? '') ?>"
-                        required maxlength="100">
+                        required>
                 </div>
 
                 <div class="form-group">
                     <label for="lastname">Nom</label>
                     <input type="text" name="lastname" id="lastname"
                         value="<?= htmlspecialchars($_POST['lastname'] ?? '') ?>"
-                        required maxlength="100">
+                        required>
                 </div>
 
                 <div class="form-group">
                     <label for="usermail">E-mail</label>
                     <input type="email" name="usermail" id="usermail"
                         value="<?= htmlspecialchars($_POST['usermail'] ?? '') ?>"
-                        required maxlength="200">
+                        required>
                 </div>
 
                 <div class="form-group">
                     <label for="postcode">Code Postal</label>
                     <input type="text" name="postcode" id="postcode"
                         value="<?= htmlspecialchars($_POST['postcode'] ?? '') ?>"
-                        required maxlength="4" pattern="\d{4}">
+                        required>
                 </div>
 
                 <div class="form-group">
                     <label for="phone">Numero de Téléphone</label>
                     <input type="text" name="phone" id="phone"
                         value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>"
-                        required maxlength="20">
+                        required>
                 </div>
 
                 <div class="form-group">
                     <label for="message">Message</label>
                     <div class="textarea-wrapper">
                         <textarea name="message" id="message" rows="5"
-                            required maxlength="500"><?= htmlspecialchars($_POST['message'] ?? '') ?></textarea>
+                            required><?= htmlspecialchars($_POST['message'] ?? '') ?></textarea>
                         <span id="charCount" class="char-count">0 / 300 caractères</span>
                     </div>
                 </div>
@@ -132,36 +132,38 @@
 
             <?php if (!empty($paginationHtml)) echo $paginationHtml; ?>
             <!-- Autres messages -->
-            <?php foreach ($messages as $msg): ?>
+            <div class="list-commentaires">
+                <?php foreach ($messages as $msg): ?>
 
-                <div class="commentaires-utilisateur">
-                    <div class="entete-message">
-                        <div class="entete-message-gauche">
+                    <div class="commentaires-utilisateur">
+                        <div class="entete-message">
+                            <div class="entete-message-gauche">
 
-                            <p>
-                                <?= htmlspecialchars($msg['firstname']) ?>
-                                <?= htmlspecialchars($msg['lastname']) ?>
-                            </p>
-                            <p>
-                                <?= htmlspecialchars($msg['usermail']) ?>
-                            </p>
+                                <p>
+                                    <?= htmlspecialchars($msg['firstname']) ?>
+                                    <?= htmlspecialchars($msg['lastname']) ?>
+                                </p>
+                                <p>
+                                    <?= htmlspecialchars($msg['usermail']) ?>
+                                </p>
+                            </div>
+                            <div class="entete-message-droite">
+                                <p class="message-meta">
+                                    <?php
+                                    $date = new DateTime($msg['datemessage']);
+                                    echo 'le (' . $date->format('d/m/Y') . ' à ' . $date->format('H\hi') . ')';
+                                    ?>
+                                </p>
+                            </div>
                         </div>
-                        <div class="entete-message-droite">
-                            <p class="message-meta">
-                                <?php
-                                $date = new DateTime($msg['datemessage']);
-                                echo 'le (' . $date->format('d/m/Y') . ' à ' . $date->format('H\hi') . ')';
-                                ?>
+                        <div class="message-content">
+                            <p>
+                                <?=(htmlspecialchars($msg['message'])) ?>
                             </p>
                         </div>
                     </div>
-                    <div>
-                        <p class="message-content">
-                            <?= (htmlspecialchars($msg['message'])) ?>
-                        </p>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            </div>
 
 
         </div>
