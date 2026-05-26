@@ -47,7 +47,14 @@ try {
 
 // on appelle la fonction d'insertion dans la DB (addGuestbook())
 
+if (isset($_POST['firstname'], $_POST['lastname'], $_POST['usermail'], $_POST['phone'], $_POST['postcode'], $_POST['message'])) {
+    // envoi de nos var nécessaires à l'insertion 
+    $addGuestbook = addGuestbook($connectDB, $_POST['firstname'], $_POST['lastname'], $_POST['usermail'], $_POST['phone'], $_POST['postcode'], $_POST['message']);
+}
+
 // si l'insertion a réussi
+
+$allComment = getAllGuestbook($connectDB);
 
 // on redirige vers la page actuelle (ou on affiche un message de succès)
 
@@ -56,6 +63,8 @@ try {
 /*
  * On récupère les messages du livre d'or
  */
+
+
 
 // on appelle la fonction de récupération de la DB (getAllGuestbook())
 

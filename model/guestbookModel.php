@@ -1,5 +1,6 @@
 <?php
 # model/guestbookModel.php
+
 /********************************
  * Model de la page livre d'or
  *******************************/
@@ -20,24 +21,67 @@
  * Une requête préparée est utilisée pour éviter les injections SQL
  * Les données sont échappées pour éviter les injections XSS (protection backend)
  */
-function addGuestbook(PDO $db,
-                    string $firstname,
-                    string $lastname,
-                    string $usermail,
-                    string $phone,
-                    string $postcode,
-                    string $message
-): bool
-{
+function addGuestbook(
+    PDO $db,
+    string $firstname,
+    string $lastname,
+    string $usermail,
+    string $phone,
+    string $postcode,
+    string $message
+): bool {
     // traitement des données backend (SECURITE)
 
     // si pas de données complètes ou ne correspondant pas à nos attentes, on renvoie false
-    return false;
-    // requête préparée obligatoire !
+    $usermail = filter_var($usermail, FILTER_VALIDATE_EMAIL);
+    $message = htmlspecialchars(trim(strip_tags($message)));
+    $firstname = htmlspecialchars(trim(strip_tags($firstname)));
+    $lastname = htmlspecialchars(trim(strip_tags($lastname)));
+    $phone = htmlspecialchars(trim(strip_tags($phone)));
+    $phone = htmlspecialchars(trim(strip_tags($postcode)));
+
+    if (
+        $usermail === false             ||
+        strlen($usermail) > 120            ||
+        empty($firstname)            ||
+        empty($lastname)            ||
+        strlen($firstname) < 3         ||
+        strlen($firstname) > 120        ||
+        strlen($lastname) < 3         ||
+        strlen($lastname) > 120        ||
+        empty($phone)                 ||
+        strlen($phone) < 10              ||
+        strlen($phone) > 10          ||
+        empty($postcode)                 ||
+        strlen($postcode) < 4              ||
+        strlen($postcode) > 4          ||
+        empty($message)          ||
+        strlen($message) < 5       ||
+        strlen($message) > 300
+    ) return false;    // requête préparée obligatoire !
 
     // si l'insertion a réussi
     // on renvoie true
     // sinon, on renvoie false
+
+
+
+    $prepare = $db->prepare("
+    INSERT INTO `commentaire`(`firstname`,`lastname`,`usermail`,`phone`,`postcode`,`message`)
+    VALUES(:firstname,:lastname,:usermail,:phone,:postcode,:message); 
+    ");
+    # on met nos val dans 
+    $prepare->bindValue(':firstname', $firstname);
+    $prepare->bindValue(':lastname', $lastname);
+    $prepare->bindValue(':usermail', $usermail);
+    $prepare->bindValue(':phone', $phone);
+    $prepare->bindValue(':postcode', $postcode);
+    $prepare->bindValue(':message', $message);
+
+    # on exécute la requete
+    var_dump($db, $firstname, $lastname, $usermail, $phone, $postcode, $message);
+    $retour = $prepare->execute();
+    return $retour; // true en cas de réussite, false en cas d'échec
 
 }
 
@@ -78,7 +122,6 @@ function getNbTotalGuestbook(PDO $db): int
     // bonne pratique, fermez le curseur,
     // renvoyez le nombre total de messages
     return 0;
-
 }
 // SELECTION de messages dans le livre d'or par ordre de date croissante
 // en lien avec la pagination
@@ -92,7 +135,7 @@ function getNbTotalGuestbook(PDO $db): int
  * en utilisant une requête préparée (injection SQL), n'affiche que les messages
  * de la page courante
  */
-function getGuestbookPagination(PDO $db, int $pageActu=1, int $limit=5): array
+function getGuestbookPagination(PDO $db, int $pageActu = 1, int $limit = 5): array
 {
     // Requête préparée obligatoire !
     // Le $offset et le $limit sont des entiers, il faut donc les passer
@@ -115,7 +158,7 @@ function getGuestbookPagination(PDO $db, int $pageActu=1, int $limit=5): array
  * Fonction qui génère le code HTML de la pagination
  * si le nombre de pages est supérieur à une.
  */
-function pagination(int $nbtotalMessage, string $url="./?", string $get="page", int $pageActu=1, int $perPage=5 ): string
+function pagination(int $nbtotalMessage, string $url = "./?", string $get = "page", int $pageActu = 1, int $perPage = 5): string
 {
     $sortie = "";
     if ($nbtotalMessage === 0) return "";
@@ -147,5 +190,4 @@ function pagination(int $nbtotalMessage, string $url="./?", string $get="page", 
     }
     $sortie .= "</p>";
     return $sortie;
-
 }
