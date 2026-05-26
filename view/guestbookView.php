@@ -3,54 +3,181 @@
 ?>
 <!doctype html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TI2 | Livre d'or</title>
     <link rel="icon" type="image/png" href="img/favicon.png">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
-<h1>TI2 | Livre d'or</h1>
-<!-- Formulaire d'ajout d'un message -->
-<h2>Ici le formulaire</h2>
-<!-- Si pas de message -->
-<h3>Pas encore de message</h3>
-<!-- Si 1 message -->
-<h3>Il y a 1 message</h3>
-<!-- Si plusieurs messages -->
-<h3>Il y a X messages</h3>
+    <header>
+        <div class="logo">
+            <img class="logo-img" src="./img/favicon.png" alt="">
+        </div>
+        <div class="titre">
+            <h1>TI2 | Livre d'or</h1>
+            <p>laissez une trace de votre passage</p>
+        </div>
+        <nav class="nav">
+            <button class="admin-btn">
+                <img class="engronage" src="./img/reglage.png" alt="">
+                Administration
+            </button>
+        </nav>
+    </header>
+    <main>
 
-<!-- Pagination (BONUS) -->
+        <!-- Formulaire d'ajout d'un message -->
+        <div class="addGuestComment">
+            <div class="book-img-container">
+                <img src="./img/livre-ouvert.png" alt="">
+            </div>
+            <form action="" method="post" id="guestbookForm" novalidate>
 
-<!-- Liste des messages -->
-<ul>
-    <li>
-        <p><strong>firstname lastname</strong></p>
-        <p><em>datemessage</em></p>
-        <p>message</p>
-    </li>
-    <!-- Autres messages -->
-    <li>
-        <p><strong>firstname lastname</strong></p>
-        <p><em>datemessage</em></p>
-        <p>message</p>
-    </li>
-</ul>
-etc ...
-<!-- Pagination (BONUS) -->
-<?php
-// À commenter quand on a fini de tester
-echo "<h3>Nos var_dump() pour le débugage</h3>";
-echo '<p>$_POST</p>';
-var_dump($_POST);
-echo '<p>$_GET</p>';
-var_dump($_GET);
-?>
+                <div class="form-group">
+                    <label for="firstname">Prénom</label>
+                    <input type="text" name="firstname" id="firstname"
+                        value="<?= htmlspecialchars($_POST['firstname'] ?? '') ?>"
+                        required maxlength="100">
+                </div>
 
-<script src="js/validation.js"></script>
+                <div class="form-group">
+                    <label for="lastname">Nom</label>
+                    <input type="text" name="lastname" id="lastname"
+                        value="<?= htmlspecialchars($_POST['lastname'] ?? '') ?>"
+                        required maxlength="100">
+                </div>
+
+                <div class="form-group">
+                    <label for="usermail">E-mail</label>
+                    <input type="email" name="usermail" id="usermail"
+                        value="<?= htmlspecialchars($_POST['usermail'] ?? '') ?>"
+                        required maxlength="200">
+                </div>
+
+                <div class="form-group">
+                    <label for="postcode">Code Postal</label>
+                    <input type="text" name="postcode" id="postcode"
+                        value="<?= htmlspecialchars($_POST['postcode'] ?? '') ?>"
+                        required maxlength="4" pattern="\d{4}">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Numero de Téléphone</label>
+                    <input type="text" name="phone" id="phone"
+                        value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>"
+                        required maxlength="20">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <div class="textarea-wrapper">
+                        <textarea name="message" id="message" rows="5"
+                            required maxlength="500"><?= htmlspecialchars($_POST['message'] ?? '') ?></textarea>
+                        <span id="charCount" class="char-count">0 / 300 caractères</span>
+                    </div>
+                </div>
+
+                <button class="submit-btn" type="submit">Envoyer</button>
+
+            </form>
+            <?php
+            // on a tenté d'envoyé le formulaire et
+            if (isset($insert)):
+                // échec de l'insertion
+                if ($insert === false):
+            ?>
+                    <div class="not-insert-message">
+                        échec lors d'un l'insertion <a href="javascript:history.go(-1);">Vérifiez votre formulaire</a>
+                    </div>
+                <?php
+                // réussite de l'insertion
+                else:
+                ?>
+                    <div class="insert-message">
+                        Merci pour votre message, vous allez être redirigé
+                        <script>
+                            setTimeout(
+                                function() {
+                                    window.location.href = "./";
+                                }, 2000
+                            );
+                        </script>
+                    </div>
+            <?php
+                endif;
+            endif;
+            ?>
+        </div>
+
+
+
+        <!-- Liste des messages -->
+        <div class="messages-div">
+
+            <div class="titre-message">
+                <?php if ($nbMessages === 0): ?>
+                    <h2 class="nb-messages">Messagess récent - Pas encore de message</h2>
+                <?php elseif ($nbMessages === 1): ?>
+                    <h2 class="nb-messages">Messagess récent - Il y a actuellemnt 1 message</h2>
+                <?php else: ?>
+                    <h2 class="nb-messages">Messagess récent - Il y a actuellemnt <?= $nbMessages ?> messages</h2>
+                <?php endif; ?>
+            </div>
+
+            <?php if (!empty($paginationHtml)) echo $paginationHtml; ?>
+            <!-- Autres messages -->
+            <?php foreach ($messages as $msg): ?>
+
+                <div class="commentaires-utilisateur">
+                    <div class="entete-message">
+                        <div class="entete-message-gauche">
+
+                            <p>
+                                <?= htmlspecialchars($msg['firstname']) ?>
+                                <?= htmlspecialchars($msg['lastname']) ?>
+                            </p>
+                            <p>
+                                <?= htmlspecialchars($msg['usermail']) ?>
+                            </p>
+                        </div>
+                        <div class="entete-message-droite">
+                            <p class="message-meta">
+                                <?php
+                                $date = new DateTime($msg['datemessage']);
+                                echo 'le (' . $date->format('d/m/Y') . ' à ' . $date->format('H\hi') . ')';
+                                ?>
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="message-content">
+                            <?= (htmlspecialchars($msg['message'])) ?>
+                        </p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+
+
+        </div>
+        <!-- Pagination (BONUS) -->
+        <!-- Pagination (BONUS) -->
+        <?php
+        // À commenter quand on a fini de tester
+        // echo "<h3>Nos var_dump() pour le débugage</h3>";
+        // echo '<p>$_POST</p>';
+        // var_dump($_POST);
+        // echo '<p>$_GET</p>';
+        // var_dump($_GET);
+        ?>
+
+    </main>
+    <script src="js/validation.js"></script>
 </body>
-</html>
 
+</html>

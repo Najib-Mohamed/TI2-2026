@@ -42,22 +42,18 @@ function addGuestbook(
 
     if (
         $usermail === false             ||
-        strlen($usermail) > 120            ||
+        strlen($usermail) <= 120            ||
         empty($firstname)            ||
         empty($lastname)            ||
-        strlen($firstname) < 3         ||
-        strlen($firstname) > 120        ||
-        strlen($lastname) < 3         ||
-        strlen($lastname) > 120        ||
+        strlen($firstname) <= 100        ||
+        strlen($lastname) <= 100        ||
         empty($phone)                 ||
-        strlen($phone) < 10              ||
-        strlen($phone) > 10          ||
+        strlen($phone) == 10              ||
         empty($postcode)                 ||
-        strlen($postcode) < 4              ||
-        strlen($postcode) > 4          ||
+        strlen($postcode) == 4              ||
         empty($message)          ||
-        strlen($message) < 5       ||
-        strlen($message) > 300
+        strlen($message) > 5       ||
+        strlen($message) < 300
     ) return false;    // requête préparée obligatoire !
 
     // si l'insertion a réussi
@@ -79,7 +75,7 @@ function addGuestbook(
     $prepare->bindValue(':message', $message);
 
     # on exécute la requete
-    var_dump($db, $firstname, $lastname, $usermail, $phone, $postcode, $message);
+    // var_dump($db, $firstname, $lastname, $usermail, $phone, $postcode, $message);
     $retour = $prepare->execute();
     return $retour; // true en cas de réussite, false en cas d'échec
 
@@ -103,7 +99,14 @@ function getAllGuestbook(PDO $db): array
     // si la requête a réussi,
     // bonne pratique, fermez le curseur
     // renvoyer le tableau de(s) message(s)
-    return [];
+    $stmt = $db->query("SELECT * FROM `guestbook` ORDER BY `datemessage` DESC");
+    // un tableau avec les results
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Bonne pratique 
+    $stmt->closeCursor();
+    // retour du tableau
+    return $result;
 }
 
 /**************************
