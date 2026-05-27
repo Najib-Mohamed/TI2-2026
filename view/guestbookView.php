@@ -56,7 +56,7 @@
                         required>
                 </div>
 
-                <div class="form-group" id="#f-email">
+                <div class="form-group" id="f-email">
                     <label for="usermail">E-mail</label>
                     <span class="hint"></span>
                     <input type="email" name="usermail" id="usermail"
@@ -64,7 +64,7 @@
                         required>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="f-postcode">
                     <label for="postcode">Code Postal</label>
                     <span class="hint"></span>
                     <input type="text" name="postcode" id="postcode"

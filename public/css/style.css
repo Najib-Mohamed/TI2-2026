@@ -271,6 +271,12 @@ label {
   margin: 0;
 }
 
+.hint {
+  margin-top: 6px;
+  font-family: monospace;
+  font-size: 11px;
+  min-height: 14px;
+}
 .error {
   color: #ff4d2e;
   font-weight: bold;
