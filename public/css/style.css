@@ -285,6 +285,10 @@ label {
   color: #43ff2a;
   font-weight: bold;
 }
+.dark {
+  background-color: #111;
+  /* color: white ; */
+}
 
 @media (max-width: 480px) {
 }

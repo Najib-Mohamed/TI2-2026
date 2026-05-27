@@ -150,7 +150,7 @@ $(document).ready(function () {
     // regex pour code postal
     postCode: /^[0-9]{4}$/,
     // regex pour numero gsm
-    gsm: /^(?:\+324|00324|04)\d{8}$/
+    gsm: /^(?:\+324|00324|04)\d{8}$/,
   };
 
   // verification du firstname en yemps réel
@@ -244,6 +244,40 @@ $(document).ready(function () {
     } else {
       $field.addClass("error");
       $hint.text("✗ Format invalide (ex : 1080)");
+    }
+  });
+
+  // validation du numero de gsm
+  $("#phone").on("keyup", function () {
+    // Ton code ici ↓
+    const val = $(this).val();
+    const $field = $("#f-phone");
+    const $hint = $field.find(".hint");
+
+    $field.removeClass("ok error");
+
+    if (val === "") {
+      $hint.text("doit etre composé de 8 chiffre apres le 4");
+      return;
+    }
+
+    if (REGEX.gsm.test(val)) {
+      $field.addClass("ok");
+      $hint.text("gsm valide");
+    } else {
+      $field.addClass("error");
+      $hint.text("✗ Format invalide (ex : 00324** ou +324*** ou 04***)");
+    }
+  });
+  $("#dark-btn").click(function () {
+    if ($("body").hasClass("dark")) {
+      $("body").removeClass("dark");
+      $(".card").removeClass("dark");
+      $("#dark-btn").html("<img class='engronage' src='./img/reglage.png' alt=''>Dark Mode");
+    } else {
+      $("body").addClass("dark");
+      $(".card").addClass("dark");
+      $("#dark-btn").html("<img class='engronage' src='./img/reglage.png' alt=''>Light Mode");
     }
   });
 });

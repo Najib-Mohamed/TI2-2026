@@ -26,9 +26,9 @@
             <p>laissez une trace de votre passage</p>
         </div>
         <nav class="nav">
-            <button class="admin-btn">
+            <button class="admin-btn" id="dark-btn">
                 <img class="engronage" src="./img/reglage.png" alt="">
-                Administration
+                Dark Mode
             </button>
         </nav>
     </header>
@@ -72,7 +72,7 @@
                         required>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="f-phone">
                     <label for="phone">Numero de Téléphone</label>
                     <span class="hint"></span>
                     <input type="text" name="phone" id="phone"
