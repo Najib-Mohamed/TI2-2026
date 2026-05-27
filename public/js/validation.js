@@ -177,5 +177,52 @@ $(document).ready(function () {
       $hint.text("✗ 3-100 caractères, uniquement lettres");
     }
   });
+  // verification du lastname en yemps réel
+  $("#lastname").on("keyup", function () {
+    // Ton code ici ↓
+    const val = $(this).val();
+    const $field = $("#f-lastname");
+    const $hint = $field.find(".hint");
 
+    $field.removeClass("ok error");
+
+    if (val === "") {
+      $hint.text("3 à 100 caractères : lettres ");
+      return;
+    }
+
+    if (REGEX.username.test(val)) {
+      $field.addClass("ok");
+      $hint.text("prenom valide");
+    } else {
+      $field.addClass("error");
+      $hint.text("✗ 3-100 caractères, uniquement lettres");
+    }
+  });
+
+  /* ============================================================
+  VALIDATION TEMPS RÉEL — email
+  ============================================================ */
+
+  $("#usermail").on("keyup", function () {
+    // Ton code ici ↓
+    const val = $(this).val();
+    const $field = $("#f-email");
+    const $hint = $field.find(".hint");
+
+    $field.removeClass("ok error");
+
+    if (val === "") {
+      $hint.text("Format : nom@domaine.ext");
+      return;
+    }
+
+    if (REGEX.email.test(val)) {
+      $field.addClass("ok");
+      $hint.text("Email valide");
+    } else {
+      $field.addClass("error");
+      $hint.text("✗ Format invalide (ex : nom@domaine.com)");
+    }
+  });
 });
