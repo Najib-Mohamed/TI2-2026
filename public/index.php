@@ -75,8 +75,6 @@ if (isset(
     if ($insert === true) {
         // Succès : on stocke le message en session et on redirige 
         $_SESSION['feedbackMessage'] = ['type' => 'success', 'text' => 'Votre message a bien été enregistré !'];
-        header('Location: index.php');
-        exit();
     } else {
         // Échec de validation backend
         $feedbackMessage = ['type' => 'error', 'text' => 'Erreur : vérifiez vos données et réessayez.'];

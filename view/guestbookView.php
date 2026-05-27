@@ -82,6 +82,10 @@
                         <span id="charCount" class="char-count">0 / 300 caractères</span>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="checkbox">J'accepte le stockage de mes données personellles</label>
+                    <input type="checkbox">
+                </div>
 
                 <button class="submit-btn" type="submit">Envoyer</button>
 
@@ -105,7 +109,7 @@
                             setTimeout(
                                 function() {
                                     window.location.href = "./";
-                                }, 2000
+                                }, 500
                             );
                         </script>
                     </div>
