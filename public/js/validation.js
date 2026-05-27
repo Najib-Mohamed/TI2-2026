@@ -141,3 +141,41 @@
    Bon travail !
    ========================================================================= */
 
+$(document).ready(function () {
+  const REGEX = {
+    // TODO 1 — Regex firstname/lastname
+    // Règle : entre 3 et 16 caractères
+    //         uniquement lettres (a-z, A-Z), chiffres, underscore _ ou tiret -
+    // Indice : ^ = début, $ = fin, [groupe]{min,max}
+    username: /^[a-zA-Z]{3,100}$/,
+
+    // TODO 2 — Regex email
+    // Règle : qqch @ qqch . qqch (au moins 2 lettres pour le domaine)
+    // Indice : \. pour un vrai point, + = un ou plusieurs, {2,} = au moins 2
+    email: /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/,
+  };
+
+  // verification du firstname en yemps réel
+  $("#firstname").on("keyup", function () {
+    // Ton code ici ↓
+    const val = $(this).val();
+    const $field = $("#f-firstname");
+    const $hint = $field.find(".hint");
+
+    $field.removeClass("ok error");
+
+    if (val === "") {
+      $hint.text("3 à 100 caractères : lettres ");
+      return;
+    }
+
+    if (REGEX.username.test(val)) {
+      $field.addClass("ok");
+      $hint.text("prenom valide");
+    } else {
+      $field.addClass("error");
+      $hint.text("✗ 3-100 caractères, uniquement lettres");
+    }
+  });
+
+});

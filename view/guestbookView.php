@@ -12,9 +12,11 @@
     <title>TI2 | Livre d'or</title>
     <link rel="icon" type="image/png" href="img/favicon.png">
     <link rel="stylesheet" href="./css/style.css">
+    <script src="js/jquery-3.7.1.min.js"></script>
 </head>
 
 <body>
+    <script src="js/validation.js"></script>
     <header>
         <div class="logo">
             <img class="logo-img" src="./img/favicon.png" alt="">
@@ -31,7 +33,6 @@
         </nav>
     </header>
     <main>
-
         <!-- Formulaire d'ajout d'un message -->
         <div class="addGuestComment">
             <div class="book-img-container">
@@ -39,22 +40,25 @@
             </div>
             <form action="" method="post" id="guestbookForm" novalidate>
 
-                <div class="form-group">
+                <div class="form-group" id="f-firstname">
                     <label for="firstname">Prénom</label>
+                    <span class="hint"></span>
                     <input type="text" name="firstname" id="firstname"
                         value="<?= htmlspecialchars($_POST['firstname'] ?? '') ?>"
                         required>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="f-lastname">
                     <label for="lastname">Nom</label>
+                    <span class="hint"></span>
                     <input type="text" name="lastname" id="lastname"
                         value="<?= htmlspecialchars($_POST['lastname'] ?? '') ?>"
                         required>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="#f-email">
                     <label for="usermail">E-mail</label>
+                    <span class="hint"></span>
                     <input type="email" name="usermail" id="usermail"
                         value="<?= htmlspecialchars($_POST['usermail'] ?? '') ?>"
                         required>
@@ -62,6 +66,7 @@
 
                 <div class="form-group">
                     <label for="postcode">Code Postal</label>
+                    <span class="hint"></span>
                     <input type="text" name="postcode" id="postcode"
                         value="<?= htmlspecialchars($_POST['postcode'] ?? '') ?>"
                         required>
@@ -69,6 +74,7 @@
 
                 <div class="form-group">
                     <label for="phone">Numero de Téléphone</label>
+                    <span class="hint"></span>
                     <input type="text" name="phone" id="phone"
                         value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>"
                         required>
@@ -76,6 +82,7 @@
 
                 <div class="form-group">
                     <label for="message">Message</label>
+                    
                     <div class="textarea-wrapper">
                         <textarea name="message" id="message" rows="5"
                             required><?= htmlspecialchars($_POST['message'] ?? '') ?></textarea>
@@ -83,8 +90,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="checkbox">J'accepte le stockage de mes données personellles</label>
                     <input type="checkbox">
+                    <label for="checkbox">J'accepte le stockage de mes données personellles</label>
                 </div>
 
                 <button class="submit-btn" type="submit">Envoyer</button>
@@ -162,7 +169,7 @@
                         </div>
                         <div class="message-content">
                             <p>
-                                <?=(htmlspecialchars($msg['message'])) ?>
+                                <?= (htmlspecialchars($msg['message'])) ?>
                             </p>
                         </div>
                     </div>
@@ -183,7 +190,6 @@
         ?>
 
     </main>
-    <script src="js/validation.js"></script>
 </body>
 
 </html>

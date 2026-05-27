@@ -2,7 +2,11 @@ body {
   margin: 0;
   padding: 0;
   font-family: Georgia, "Times New Roman", Times, serif;
-  background: linear-gradient(135deg, rgba(57, 35, 155) 30%, rgba(111, 0, 255, 0.6) 70%);
+  background: linear-gradient(
+    135deg,
+    rgba(57, 35, 155) 30%,
+    rgba(111, 0, 255, 0.6) 70%
+  );
   color: white;
 }
 
@@ -20,9 +24,9 @@ header {
   justify-content: space-between;
 }
 .logo {
-    display: flex;
-    align-items: center;
-  }
+  display: flex;
+  align-items: center;
+}
 main {
   display: flex;
   width: 90%;
@@ -73,7 +77,11 @@ form {
   max-width: 350px;
   padding: 30px;
   border-radius: 15px;
-  background: linear-gradient(135deg, rgba(100, 150, 230, 0.6) 0%, rgba(70, 120, 200, 0.6) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(100, 150, 230, 0.6) 0%,
+    rgba(70, 120, 200, 0.6) 100%
+  );
   border: 1px solid rgba(255, 255, 255, 0.5);
   box-shadow: 5px 5px 10px;
   text-align: left;
@@ -100,7 +108,11 @@ textarea {
 }
 
 .submit-btn {
-  background: linear-gradient(135deg, rgba(100, 150, 230, 0.8) 0%, rgba(70, 120, 200, 0.8) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(100, 150, 230, 0.8) 0%,
+    rgba(70, 120, 200, 0.8) 100%
+  );
   padding: 12px;
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -114,7 +126,11 @@ textarea {
 }
 
 .submit-btn:hover {
-  background: linear-gradient(135deg, rgba(120, 170, 250, 0.9) 0%, rgba(90, 140, 220, 0.9) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(120, 170, 250, 0.9) 0%,
+    rgba(90, 140, 220, 0.9) 100%
+  );
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
 
@@ -139,7 +155,11 @@ label {
   width: 95%;
   height: fit-content;
   margin: 0 auto;
-  background: linear-gradient(135deg, rgba(60, 100, 200, 0.4) 0%, rgba(50, 80, 180, 0.4) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(60, 100, 200, 0.4) 0%,
+    rgba(50, 80, 180, 0.4) 100%
+  );
   color: #ffffff;
   border-radius: 12px;
   padding: 20px;
@@ -148,7 +168,11 @@ label {
 }
 
 .commentaires-utilisateur:hover {
-  background: linear-gradient(135deg, rgba(70, 120, 220, 0.5) 0%, rgba(60, 100, 200, 0.5) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(70, 120, 220, 0.5) 0%,
+    rgba(60, 100, 200, 0.5) 100%
+  );
   border-color: rgba(120, 170, 250, 0.6);
 }
 
@@ -176,7 +200,6 @@ label {
   font-size: 13px;
   margin: 0;
 }
-
 
 .book-img-container {
   padding: 20px;
@@ -248,12 +271,16 @@ label {
   margin: 0;
 }
 
-@media (max-width: 600px) {
-  .form-box {
-    padding: 20px;
-  }
+.error {
+  color: #ff4d2e;
+  font-weight: bold;
+}
+.ok {
+  color: #43ff2a;
+  font-weight: bold;
+}
 
-  h1 {
-    font-size: 24px;
-  }
+@media (max-width: 480px) {
+}
+@media (min-width: 480px) and (max-width: 960px) {
 }
