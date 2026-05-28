@@ -15,8 +15,9 @@
     <script src="js/jquery-3.7.1.min.js"></script>
 </head>
 
+<script src="js/validation.js"></script>
+
 <body>
-    <script src="js/validation.js"></script>
     <header>
         <div class="logo">
             <img class="logo-img" src="./img/favicon.png" alt="">
@@ -38,6 +39,44 @@
             <div class="book-img-container">
                 <img src="./img/livre-ouvert.png" alt="">
             </div>
+
+            <?php
+            // on a tenté d'envoyé le formulaire et
+            if (isset($insert)):
+                // échec de l'insertion
+                if ($insert === false):
+            ?>
+                    <div id="modal-container" class="modal ">
+                        <div class="modal-content rouge">
+                            <div class="not-insert-message ">
+                                échec lors d'un l'insertion <a class="retour" href="javascript:history.go(-1);">Vérifiez votre formulaire</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php
+                // réussite de l'insertion
+                else:
+                ?>
+                    <div id="modal-container" class="modal ">
+                        <div class="modal-content vert">
+                            <div class="insert-message">
+                                Merci pour votre message, vous allez être redirigé
+                                <script>
+                                    setTimeout(
+                                        function() {
+                                            window.location.href = "./";
+                                        }, 3000
+                                    );
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+            <?php
+                endif;
+            endif;
+            ?>
+
             <form action="" method="post" id="guestbookForm" novalidate>
 
                 <div class="form-group" id="f-firstname">
@@ -82,48 +121,22 @@
 
                 <div class="form-group">
                     <label for="message">Message</label>
-                    
-                    <div class="textarea-wrapper">
-                        <textarea name="message" id="message" rows="5"
+
+                    <div class="textarea-wrapper" id="f-message">
+                        <textarea name="message" id="message" maxlength="300" rows="5"
                             required><?= htmlspecialchars($_POST['message'] ?? '') ?></textarea>
                         <span id="charCount" class="char-count">0 / 300 caractères</span>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="checkbox">
                     <input type="checkbox">
                     <label for="checkbox">J'accepte le stockage de mes données personellles</label>
                 </div>
 
-                <button class="submit-btn" type="submit">Envoyer</button>
+                <button id="btn-sub" class="submit-btn" type="submit">Envoyer</button>
 
             </form>
-            <?php
-            // on a tenté d'envoyé le formulaire et
-            if (isset($insert)):
-                // échec de l'insertion
-                if ($insert === false):
-            ?>
-                    <div class="not-insert-message">
-                        échec lors d'un l'insertion <a href="javascript:history.go(-1);">Vérifiez votre formulaire</a>
-                    </div>
-                <?php
-                // réussite de l'insertion
-                else:
-                ?>
-                    <div class="insert-message">
-                        Merci pour votre message, vous allez être redirigé
-                        <script>
-                            setTimeout(
-                                function() {
-                                    window.location.href = "./";
-                                }, 500
-                            );
-                        </script>
-                    </div>
-            <?php
-                endif;
-            endif;
-            ?>
+
         </div>
 
 
@@ -133,16 +146,13 @@
 
             <div class="titre-message">
                 <?php if ($nbMessages === 0): ?>
-                    <h2 class="nb-messages">Messagess récent - Pas encore de message</h2>
+                    <h2 class="nb-messages">Messages récents - Pas encore de message</h2>
                 <?php elseif ($nbMessages === 1): ?>
-                    <h2 class="nb-messages">Messagess récent - Il y a actuellemnt 1 message</h2>
+                    <h2 class="nb-messages">Messages récent - Il y a actuellement 1 message</h2>
                 <?php else: ?>
-                    <h2 class="nb-messages">Messagess récent - Il y a actuellemnt <?= $nbMessages ?> messages</h2>
+                    <h2 class="nb-messages">Messages récents - Il y a actuellement <?= $nbMessages ?> messages</h2>
                 <?php endif; ?>
             </div>
-
-            <?php if (!empty($paginationHtml)) echo $paginationHtml; ?>
-            <!-- Autres messages -->
             <div class="list-commentaires">
                 <?php foreach ($messages as $msg): ?>
 
@@ -177,9 +187,12 @@
             </div>
 
 
+            <!-- Pagination (BONUS) -->
+            <div class="pagination">
+                <?php if (!empty($paginationHtml)) echo $paginationHtml; ?>
+            </div>
+            <!-- Pagination (BONUS) -->
         </div>
-        <!-- Pagination (BONUS) -->
-        <!-- Pagination (BONUS) -->
         <?php
         // À commenter quand on a fini de tester
         // echo "<h3>Nos var_dump() pour le débugage</h3>";

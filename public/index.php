@@ -47,11 +47,6 @@ try {
 
 // on appelle la fonction d'insertion dans la DB (addGuestbook())
 
-$feedbackMessage = null;
-if (isset($_SESSION['feedbackMessage'])) {
-    $feedbackMessage = $_SESSION['feedbackMessage'];
-    unset($_SESSION['feedbackMessage']);
-}
 /* Si le formulaire a été soumis*/
 if (isset(
     $_POST['firstname'],
@@ -82,7 +77,14 @@ if (isset(
 }
 // on appelle la fonction de récupération de la DB (getAllGuestbook())
 $messages   = getAllGuestbook($connectDB);
-$nbMessages = count($messages);
+// $nbMessages = count($messages);
+$nbMessages = getNbTotalGuestbook($connectDB);
+$pageActu   = isset($_GET[PAGINATION_GET]) ? (int) $_GET[PAGINATION_GET] : 1;
+if ($pageActu < 1) $pageActu = 1;
+ 
+$paginationHtml = pagination($nbMessages, '?', PAGINATION_GET, $pageActu, PAGINATION_NB);
+$offset         = ($pageActu - 1) * PAGINATION_NB;
+$messages       = getGuestbookPagination($connectDB, $offset, PAGINATION_NB);
 
 
 include URL_BASE . "/view/guestbookView.php";

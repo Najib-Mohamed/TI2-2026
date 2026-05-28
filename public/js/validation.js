@@ -269,15 +269,39 @@ $(document).ready(function () {
       $hint.text("✗ Format invalide (ex : 00324** ou +324*** ou 04***)");
     }
   });
+  // compte le nombre de caractere du message
+  // valide si il y a min 10 character
+  $("#message").on("keyup", function () {
+    // Ton code ici ↓
+    const val = $(this).val();
+    $(".char-count").text(val.length + " / 300 caractères");
+
+    if (val === "") {
+      $hint.text("doit contenir min 10 caracter");
+      return;
+    }
+
+    if (REGEX.gsm.test(val)) {
+      $field.addClass("ok");
+      $hint.text("gsm valide");
+    } else {
+      $field.addClass("error");
+      $hint.text("✗ Format invalide (ex : 00324** ou +324*** ou 04***)");
+    }
+  });
   $("#dark-btn").click(function () {
     if ($("body").hasClass("dark")) {
       $("body").removeClass("dark");
       $(".card").removeClass("dark");
-      $("#dark-btn").html("<img class='engronage' src='./img/reglage.png' alt=''>Dark Mode");
+      $("#dark-btn").html(
+        "<img class='engronage' src='./img/reglage.png' alt=''>Dark Mode",
+      );
     } else {
       $("body").addClass("dark");
       $(".card").addClass("dark");
-      $("#dark-btn").html("<img class='engronage' src='./img/reglage.png' alt=''>Light Mode");
+      $("#dark-btn").html(
+        "<img class='engronage' src='./img/reglage.png' alt=''>Light Mode",
+      );
     }
   });
 });
